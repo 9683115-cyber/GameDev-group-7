@@ -1,3 +1,3 @@
 # GameDev-group-7
 
-Team: Rusty Spendlove, Malcolm Kyle, kai Li Cantwell, Dave Martinez Valencia
+Team: Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
