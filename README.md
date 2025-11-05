@@ -1,4 +1,4 @@
-# Maltigis haunted Mansion
+# Maltigis Haunted Mansion
 ## Maltigi’s Haunted Mansion is a horror RPG where you complete eerie tasks to collect keys and escape a cursed mansion, all while evading the relentless Maltigi who stalks your every move.
 
 ## Team: 
