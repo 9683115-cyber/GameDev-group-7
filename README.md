@@ -8,5 +8,5 @@ Team: Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 
 
 ![Plan](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/plan-page-001.jpg)
-![Plan](![Plan](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/plan-page-001.jpg)
-
+![Plan](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/plan-page-002.jpg)
+![Plan](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/plan-page-003.jpg)
