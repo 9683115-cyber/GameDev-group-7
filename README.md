@@ -1,4 +1,4 @@
-# GameDev-group-7
+# Maltigis haunted Mansion
 
 Team: Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 
