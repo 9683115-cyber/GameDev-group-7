@@ -33,12 +33,12 @@ class Player {
       if (key == 'd' || keyCode == RIGHT) x += speed;
     }
 
-    // Makes sure player stays within screen boundaries
+   
     x = constrain(x, 0, width - this.width);
     y = constrain(y, 0, height - this.height);
   }
 
-  // Check collision with enemy (Maltigi)
+  
   boolean checkCollision(Enemy e) {
     if (x < e.x + e.width &&
         x + width > e.x &&
@@ -58,4 +58,5 @@ class Player {
     }
   }
 }
+
 
