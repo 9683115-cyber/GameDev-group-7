@@ -1,25 +1,33 @@
-// Color Fade from Black to White
-// Processing boilerplate code
+Player player;
+Enemy enemy;
+Task task;
+Kay k;
 
-float brightness = 0;    // starting color value
-float speed = 0.5;  
-int gamestate; 
 void setup() {
-  size(800, 600);        // set window size
-  colorMode(HSB, 255);   // use Hue, Saturation, Brightness mode
-  noStroke();
-  gamestate = 0; 
+  size(800, 600);
+
+  player = new Player(width/2, height/2, 40, 40);
+  enemy = new Enemy(100, 100, 30, 30, 2, 200);
+  task = new Task(400, 300, "Find the Key");
+  k = new Kay(500, 200);
 }
 
 void draw() {
-  // Set background color using current brightness
-  if(gamestate == 0){
-    // startscreen
-  }
-  else if (gamestate == 1){
-      // pause screen 
-  }
-  else{
-    // you lose screen
-  }
+  background(50);
+
+  // Player
+  player.update();
+  player.display();
+
+  // Enemy
+  enemy.update(player);
+  enemy.display();
+
+  // Task
+  task.display();
+  task.checkInteraction(player);
+
+  // Key
+  k.display();
+  k.checkCollision(player);
 }
