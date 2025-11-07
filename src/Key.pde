@@ -1,29 +1,28 @@
-class Key {
+class Kay {
   // --- Attributes ---
-  float x, y;           
-  float size;           
-  boolean isCollected;  
+  float x, y;
+  float size;
+  boolean isCollected;
 
   // --- Constructor ---
-  Key(float startX, float startY) {
+  Kay(float startX, float startY) {
     x = startX;
     y = startY;
     size = 20;
     isCollected = false;
   }
 
-  // --- Methods ---
-  
+  // --- Display the key ---
   void display() {
     if (!isCollected) {
-      fill(255, 215, 0); 
+      fill(255, 215, 0);  // gold
       ellipse(x, y, size, size);
-      fill(150, 120, 0);
-      rect(x + size/4, y - size/8, size/2, size/4);  
+      fill(150, 120, 0);  // handle color
+      rect(x + size / 4, y - size / 8, size / 2, size / 4);
     }
   }
 
-  // Check if player collides with key
+  // --- Check if Player collides with the key ---
   boolean checkCollision(Player p) {
     if (!isCollected) {
       if (p.x < x + size &&
@@ -38,6 +37,7 @@ class Key {
     return false;
   }
 
+  // --- Mark key as collected ---
   void collect() {
     isCollected = true;
   }
