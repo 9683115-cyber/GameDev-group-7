@@ -1,0 +1,37 @@
+class Task {
+  // --- Attributes ---
+  float x, y;
+  String description;
+  boolean complete;
+  float size = 40;  // clickable area size
+
+  // --- Constructor ---
+  Task(float startX, float startY, String desc) {
+    x = startX;
+    y = startY;
+    description = desc;
+    complete = false;
+  }
+
+  // --- Display the Task ---
+  void display() {
+    if (complete) {
+      fill(100, 200, 100); // green for complete
+    } else {
+      fill(200, 100, 100); // red for incomplete
+    }
+    ellipse(x, y, size, size);
+
+    fill(255);
+    textAlign(CENTER);
+    text(description, x, y - size);
+  }
+
+  // --- Check Player Interaction ---
+  void checkInteraction(Player p) {
+    float distance = dist(x, y, p.x + p.width/2, p.y + p.height/2);
+    if (distance < size/2 + max(p.width, p.height)/2) {
+      complete = true;
+    }
+  }
+}
