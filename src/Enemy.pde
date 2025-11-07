@@ -23,7 +23,7 @@ class Enemy {
   // --- Display Enemy ---
   void display() {
     fill(255, 0, 0);
-    rect(x, y, width, height);
+    rect(100, 100, width, height);
   }
 
   // --- Detect if Player is in Range ---
