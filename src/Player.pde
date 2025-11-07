@@ -18,7 +18,7 @@ class Player {
 
   // --- Methods ---
 
-  // Draw the player
+  // Still need to make character image
   void display() {
     fill(0, 200, 255);
     rect(x, y, width, height);
@@ -58,3 +58,4 @@ class Player {
     }
   }
 }
+
