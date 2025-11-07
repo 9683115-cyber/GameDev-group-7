@@ -1,63 +1,42 @@
 class Player {
-  // --- Attributes ---
-  float x, y, width, height;
-  float speed;         
-  int collectedKeys;   
-  boolean isCaught;    
+  float x, y;
+  float width, height;
+  float speed;
+  int collectedKeys;
+  boolean isCaught;
 
-  // --- Constructor ---
-  Player(float startX, float startY) {
+  // --- Constructor (4 parameters) ---
+  Player(float startX, float startY, float w, float h) {
     x = startX;
     y = startY;
-    width = 30;
-    height = 30;
+    width = w;
+    height = h;
     speed = 2.5;
     collectedKeys = 0;
     isCaught = false;
   }
 
-  // --- Methods ---
-
-  // Still need to make character image
+  // --- Display ---
   void display() {
     fill(0, 200, 255);
     rect(x, y, width, height);
   }
 
-  // Player movement using WASD keys
+  // --- Movement ---
   void move() {
     if (keyPressed) {
-      if (key == 'w' || keyCode == UP)    y -= speed;
-      if (key == 's' || keyCode == DOWN)  y += speed;
-      if (key == 'a' || keyCode == LEFT)  x -= speed;
-      if (key == 'd' || keyCode == RIGHT) x += speed;
+      char k = Character.toLowerCase(key); // handle uppercase keys too
+      if (k == 'w' || keyCode == UP)    y -= speed;
+      if (k == 's' || keyCode == DOWN)  y += speed;
+      if (k == 'a' || keyCode == LEFT)  x -= speed;
+      if (k == 'd' || keyCode == RIGHT) x += speed;
     }
 
-   
     x = constrain(x, 0, width - this.width);
     y = constrain(y, 0, height - this.height);
   }
 
-  
-  boolean checkCollision(Enemy e) {
-    if (x < e.x + e.width &&
-        x + width > e.x &&
-        y < e.y + e.height &&
-        y + height > e.y) {
-      isCaught = true;
-      return true;
-    }
-    return false;
-  }
-
-  
-  void completeTask(Task t) {
-    if (!t.isCompleted) {
-      t.isCompleted = true;
-      collectedKeys++;
-    }
+  void update() {
+    if (!isCaught) move();
   }
 }
-
-
-
