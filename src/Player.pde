@@ -50,7 +50,7 @@ class Player {
     return false;
   }
 
-  // Complete a task
+  
   void completeTask(Task t) {
     if (!t.isCompleted) {
       t.isCompleted = true;
@@ -58,5 +58,6 @@ class Player {
     }
   }
 }
+
 
 
