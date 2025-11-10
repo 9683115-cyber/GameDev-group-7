@@ -3,7 +3,7 @@ class Task {
   float x, y;
   String description;
   boolean complete;
-  float size = 40;  // clickable area size
+  float size = 40;  
 
   // --- Constructor ---
   Task(float startX, float startY, String desc) {
@@ -27,7 +27,7 @@ class Task {
     text(description, x, y - size);
   }
 
-  // --- Check Player Interaction ---
+  
   void checkInteraction(Player p) {
     float distance = dist(x, y, p.x + p.width/2, p.y + p.height/2);
     if (distance < size/2 + max(p.width, p.height)/2) {
