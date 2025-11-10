@@ -1,11 +1,11 @@
-class Kay {
+class Key {
   // --- Attributes ---
   float x, y;
   float size;
   boolean isCollected;
 
   // --- Constructor ---
-  Kay(float startX, float startY) {
+  Key(float startX, float startY) {
     x = startX;
     y = startY;
     size = 20;
@@ -42,4 +42,5 @@ class Kay {
     isCollected = true;
   }
 }
+
 
