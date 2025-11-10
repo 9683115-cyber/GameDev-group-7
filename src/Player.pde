@@ -5,7 +5,7 @@ class Player {
   int collectedKeys;
   boolean isCaught;
 
-  // --- Constructor (4 parameters) ---
+  // --- Constructor ---
   Player(float startX, float startY, float w, float h) {
     x = startX;
     y = startY;
@@ -16,13 +16,13 @@ class Player {
     isCaught = false;
   }
 
-  // --- Display ---
+
   void display() {
     fill(0, 200, 255);
     rect(x, y, width, height);
   }
 
-  // --- Movement ---
+
   void move() {
     if (keyPressed) {
       char k = Character.toLowerCase(key); // handle uppercase keys too
@@ -40,3 +40,4 @@ class Player {
     if (!isCaught) move();
   }
 }
+
