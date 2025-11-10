@@ -25,7 +25,7 @@ class Player {
 
   void move() {
     if (keyPressed) {
-      char k = Character.toLowerCase(key); // handle uppercase keys too
+      char k = Character.toLowerCase(key); 
       if (k == 'w' || keyCode == UP)    y -= speed;
       if (k == 's' || keyCode == DOWN)  y += speed;
       if (k == 'a' || keyCode == LEFT)  x -= speed;
@@ -40,4 +40,5 @@ class Player {
     if (!isCaught) move();
   }
 }
+
 
