@@ -12,7 +12,7 @@ class Kay {
     isCollected = false;
   }
 
-  // --- Display the key ---
+ 
   void display() {
     if (!isCollected) {
       fill(255, 215, 0);  // gold
@@ -22,7 +22,7 @@ class Kay {
     }
   }
 
-  // --- Check if Player collides with the key ---
+ 
   boolean checkCollision(Player p) {
     if (!isCollected) {
       if (p.x < x + size &&
@@ -37,8 +37,9 @@ class Kay {
     return false;
   }
 
-  // --- Mark key as collected ---
+  
   void collect() {
     isCollected = true;
   }
 }
+
