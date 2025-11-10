@@ -13,12 +13,12 @@ class Task {
     complete = false;
   }
 
-  // --- Display the Task ---
+ 
   void display() {
     if (complete) {
-      fill(100, 200, 100); // green for complete
+      fill(100, 200, 100); // green = complete
     } else {
-      fill(200, 100, 100); // red for incomplete
+      fill(200, 100, 100); // red = incomplete
     }
     ellipse(x, y, size, size);
 
