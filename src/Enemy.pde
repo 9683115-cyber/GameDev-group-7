@@ -6,6 +6,7 @@ class Enemy {
   float range;
   boolean chasing;
   float dirX, dirY; 
+  PImage maltigi;
 
   // --- Constructor ---
   Enemy(float startX, float startY, float w, float h, float spd, float rng) {
@@ -18,12 +19,16 @@ class Enemy {
     chasing = false;
     dirX = random(-1, 1);
     dirY = random(-1, 1);
+    maltigi = loadImage("maltigi better.png");
   }
 
 
   void display() {
-    fill(255, 0, 0);
-    rect(100, 100, width, height);
+    //fill(255, 0, 0);
+    //rect(100, 100, width, height);
+    maltigi.resize(100,100);
+    image(maltigi, x,y);
+    
   }
 
   
