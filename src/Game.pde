@@ -1,4 +1,4 @@
-//Rusty Spendlove, Malcolm Kyle. Kai Li Cantwell, Dave Martinez Valencia
+//Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 Player player;
 Enemy enemy;
 Task task;
