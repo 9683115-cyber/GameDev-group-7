@@ -1,3 +1,4 @@
+//Kai Li Cantwell
 class Player {
   float x, y;
   float width, height;
@@ -40,6 +41,7 @@ class Player {
     if (!isCaught) move();
   }
 }
+
 
 
 
