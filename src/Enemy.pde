@@ -1,3 +1,4 @@
+// Kai Li Cantwell
 class Enemy {
   // --- Attributes ---
   float x, y;
