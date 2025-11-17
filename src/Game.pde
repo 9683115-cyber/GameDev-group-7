@@ -1,4 +1,4 @@
-//Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
+// Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 PImage[] marioFrames = new PImage[5];
 Playar player;
 Key key;
