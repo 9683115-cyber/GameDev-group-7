@@ -1,4 +1,4 @@
-class Playar {
+class Player {
   PApplet parent;
   PImage[] frames;
   int frameCount;
@@ -15,7 +15,7 @@ class Playar {
   boolean movingUp = false;
   boolean movingDown = false;
   
-  Playar(PApplet p, float startX, float startY, PImage[] f) {
+  Player(PApplet p, float startX, float startY, PImage[] f) {
     parent = p;
     x = startX;
     y = startY;
@@ -50,3 +50,4 @@ class Playar {
     parent.image(frames[currentFrame], x, y, width, height);
   }
 }
+
