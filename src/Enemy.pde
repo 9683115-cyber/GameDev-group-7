@@ -1,67 +1,46 @@
 // Kai Li Cantwell
 class Enemy {
-  // --- Attributes ---
+  PApplet parent;
+  PImage img;   // <-- add this
   float x, y;
   float width, height;
   float speed;
   float range;
-  boolean chasing;
-  float dirX, dirY; 
-  PImage maltigi;
+  boolean chasing = false;
+  float dirX, dirY;
 
-  // --- Constructor ---
-  Enemy(float startX, float startY, float w, float h, float spd, float rng) {
+  // Constructor now includes PImage
+  Enemy(PApplet p, float startX, float startY, float w, float h, float spd, float rng, PImage i) {
+    parent = p;
+    img = i;              // store image
     x = startX;
     y = startY;
     width = w;
     height = h;
     speed = spd;
     range = rng;
-    chasing = false;
-    dirX = random(-1, 1);
-    dirY = random(-1, 1);
-    maltigi = loadImage("maltigi better.png");
+    dirX = parent.random(-1,1);
+    dirY = parent.random(-1,1);
   }
-
 
   void display() {
-    //fill(255, 0, 0);
-    //rect(100, 100, width, height);
-    maltigi.resize(100,100);
-    image(maltigi, x,y);
-    
+    parent.image(img, x, y, width, height);
   }
 
-  
-  boolean detectPlayer(Player p) {
-    float distance = dist(x, y, p.x, p.y);
-    chasing = distance < range;
-    return chasing;
-  }
-
-
-  void chasePlayer(Player p) {
-    float angle = atan2(p.y - y, p.x - x);
-    x += cos(angle) * speed;
-    y += sin(angle) * speed;
-  }
-
-  
-  void moveRandomly() {
-    x += dirX * speed * 0.5;
-    y += dirY * speed * 0.5;
-
-  
-    if (x < 0 || x + width > width) dirX *= -1;
-    if (y < 0 || y + height > height) dirY *= -1;
-  }
-
-
-  void update(Player p) {
-    if (detectPlayer(p)) {
-      chasePlayer(p);
+  void update(Playar p) {
+    float distance = parent.dist(x, y, p.x, p.y);
+    if (distance < range) {
+      // chase player
+      float angle = parent.atan2(p.y - y, p.x - x);
+      x += parent.cos(angle) * speed;
+      y += parent.sin(angle) * speed;
     } else {
-      moveRandomly();
+      // random movement
+      x += dirX * speed * 0.5;
+      y += dirY * speed * 0.5;
+      if (x < 0 || x + width > parent.width) dirX *= -1;
+      if (y < 0 || y + height > parent.height) dirY *= -1;
     }
   }
 }
+
