@@ -1,62 +1,113 @@
 // Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 PImage[] marioFrames = new PImage[5];
 Playar player;
-Key key;
+Key gameKey;
 Task task;
 Enemy enemy;
 PImage keyImg;
-PImage enemyimg;
+PImage enemyImg;
+PImage winImg;
+PImage loseImg;
+PImage pauseImg;
+PImage startImg;
+
+boolean gamePaused = false;
+boolean gameWon = false;
+boolean gameLost = false;
+boolean gamestart = false;
+
 void setup() {
-  size(800, 600);
+  fullScreen();
+  background(0);
 
-
+  // Load images
   for (int i = 0; i < 5; i++) {
     marioFrames[i] = loadImage("mario" + (i+1) + ".png");
   }
 
   keyImg = loadImage("key.png");
-  enemyimg = loadImage("maltigi better.png");
+  enemyImg = loadImage("maltigi better.png");
+  winImg = loadImage("win.png");
+  loseImg = loadImage("WEGALOSE-1-1.png");
+  pauseImg = loadImage("PauseScreen-1-1.png");
+  startImg = loadImage("start .png");
 
   player = new Playar(this, width/2, height/2, marioFrames);
-
-
-  key = new Key(this, 600, 200, keyImg);
+  gameKey = new Key(this, 600, 200, keyImg);
   task = new Task(this, 200, 100, "Find the Key");
-
-enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyimg);
-
+  enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyImg);
 }
 
 void draw() {
   background(80, 180, 250);
 
-  // Update & display player
+  if (!gamestart) {
+  imageMode(CORNER);   
+  image(startImg, 0, 0, width, height); 
+  return;
+}
+
+  if (gamePaused) {
+    imageMode(CENTER);
+    image(pauseImg, width/2, height/1.5);
+    return;
+  }
+
+  
+  if (gameWon) {
+    imageMode(CENTER);
+    image(winImg, width/2, height/2);
+    return;
+  }
+  if (gameLost) {
+    imageMode(CENTER);
+    image(loseImg, width/2, height/2);
+    return;
+  }
+
+  
   player.update();
   player.display();
 
-  // Key
-  key.display();
-  key.checkCollision(player);
+  gameKey.display();
+  gameKey.checkCollision(player); 
 
-  // Task
   task.display();
   task.checkInteraction(player);
 
-  // Enemy
   enemy.update(player);
   enemy.display();
+  if (enemy.checkCollision(player)) {
+    gameLost = true; 
+  }
 }
 
 void keyPressed() {
-  if (keyCode == RIGHT) player.movingRight = true;
-  if (keyCode == LEFT)  player.movingLeft = true;
-  if (keyCode == UP)    player.movingUp = true;
-  if (keyCode == DOWN)  player.movingDown = true;
+  // Pause toggle
+  if (key == 'p' || key == 'P') {
+    gamePaused = !gamePaused;
+  }
+
+  if (!gamePaused && !gameWon && !gameLost) {
+    if (keyCode == RIGHT) player.movingRight = true;
+    if (keyCode == LEFT)  player.movingLeft = true;
+    if (keyCode == UP)    player.movingUp = true;
+    if (keyCode == DOWN)  player.movingDown = true;
+  }
 }
 
 void keyReleased() {
-  if (keyCode == RIGHT) player.movingRight = false;
-  if (keyCode == LEFT)  player.movingLeft = false;
-  if (keyCode == UP)    player.movingUp = false;
-  if (keyCode == DOWN)  player.movingDown = false;
+  if (!gamePaused && !gameWon && !gameLost) {
+    if (keyCode == RIGHT) player.movingRight = false;
+    if (keyCode == LEFT)  player.movingLeft = false;
+    if (keyCode == UP)    player.movingUp = false;
+    if (keyCode == DOWN)  player.movingDown = false;
+  }
+}
+
+
+void mousePressed() {
+  if (!gamestart) {
+    gamestart = true;
+  }
 }
