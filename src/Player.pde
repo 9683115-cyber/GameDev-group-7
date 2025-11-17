@@ -1,4 +1,3 @@
-
 class Playar {
   PApplet parent;
   PImage[] frames;
@@ -6,7 +5,7 @@ class Playar {
   int currentFrame = 0;
   int frameDelay = 6;
   int frameTimer = 0;
-
+ 
   float x, y;
   float vx = 0, vy = 0;
   float width = 64, height = 96;
@@ -15,7 +14,7 @@ class Playar {
   boolean movingLeft = false;
   boolean movingUp = false;
   boolean movingDown = false;
-
+  
   Playar(PApplet p, float startX, float startY, PImage[] f) {
     parent = p;
     x = startX;
@@ -51,13 +50,3 @@ class Playar {
     parent.image(frames[currentFrame], x, y, width, height);
   }
 }
-
-
-
-
-
-
-
-
-
-
