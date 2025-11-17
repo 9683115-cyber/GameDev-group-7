@@ -9,7 +9,7 @@ PImage enemyimg;
 void setup() {
   size(800, 600);
 
-  // Load player frames
+
   for (int i = 0; i < 5; i++) {
     marioFrames[i] = loadImage("mario" + (i+1) + ".png");
   }
@@ -17,14 +17,12 @@ void setup() {
   keyImg = loadImage("key.png");
   enemyimg = loadImage("maltigi better.png");
 
-  // Create player at center
   player = new Playar(this, width/2, height/2, marioFrames);
 
-  // Key and task
+
   key = new Key(this, 600, 200, keyImg);
   task = new Task(this, 200, 100, "Find the Key");
 
-  // Enemy
 enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyimg);
 
 }
