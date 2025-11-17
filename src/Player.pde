@@ -1,46 +1,57 @@
 //Kai Li Cantwell
-class Player {
-  float x, y;
-  float width, height;
-  float speed;
-  int collectedKeys;
-  boolean isCaught;
+class Playar {
+  PApplet parent;
+  PImage[] frames;
+  int frameCount;
+  int currentFrame = 0;
+  int frameDelay = 6;
+  int frameTimer = 0;
 
-  // --- Constructor ---
-  Player(float startX, float startY, float w, float h) {
+  float x, y;
+  float vx = 0, vy = 0;
+  float width = 64, height = 96;
+
+  boolean movingRight = false;
+  boolean movingLeft = false;
+  boolean movingUp = false;
+  boolean movingDown = false;
+
+  Playar(PApplet p, float startX, float startY, PImage[] f) {
+    parent = p;
     x = startX;
     y = startY;
-    width = w;
-    height = h;
-    speed = 2.5;
-    collectedKeys = 0;
-    isCaught = false;
-  }
-
-
-  void display() {
-    fill(0, 200, 255);
-    rect(x, y, width, height);
-  }
-
-
-  void move() {
-    if (keyPressed) {
-      char k = Character.toLowerCase(key); 
-      if (k == 'w' || keyCode == UP)    y -= speed;
-      if (k == 's' || keyCode == DOWN)  y += speed;
-      if (k == 'a' || keyCode == LEFT)  x -= speed;
-      if (k == 'd' || keyCode == RIGHT) x += speed;
-    }
-
-    x = constrain(x, 0, width - this.width);
-    y = constrain(y, 0, height - this.height);
+    frames = f;
+    frameCount = frames.length;
   }
 
   void update() {
-    if (!isCaught) move();
+    vx = 0;
+    vy = 0;
+    if (movingRight) vx = 5;
+    if (movingLeft)  vx = -5;
+    if (movingUp)    vy = -5;
+    if (movingDown)  vy = 5;
+
+    x += vx;
+    y += vy;
+
+    // Animation
+    if (vx != 0 || vy != 0) {
+      frameTimer++;
+      if (frameTimer >= frameDelay) {
+        currentFrame = (currentFrame + 1) % frameCount;
+        frameTimer = 0;
+      }
+    } else {
+      currentFrame = 0;
+    }
+  }
+
+  void display() {
+    parent.image(frames[currentFrame], x, y, width, height);
   }
 }
+
 
 
 
