@@ -1,3 +1,4 @@
+// Dave Martinez Valencia
 class Playar {
   PApplet parent;
   PImage[] frames;
@@ -50,6 +51,7 @@ class Playar {
     parent.image(frames[currentFrame], x, y, width, height);
   }
 }
+
 
 
 
