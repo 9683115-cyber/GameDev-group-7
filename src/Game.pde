@@ -1,6 +1,6 @@
 // Rusty Spendlove, Malcolm Kyle, Kai Li Cantwell, Dave Martinez Valencia
 PImage[] marioFrames = new PImage[5];
-Playar player;
+Player player;
 Key gameKey;
 Task task;
 Enemy enemy;
@@ -32,7 +32,7 @@ void setup() {
   pauseImg = loadImage("PauseScreen-1-1.png");
   startImg = loadImage("start .png");
 
-  player = new Playar(this, width/2, height/2, marioFrames);
+  player = new Player(this, width/2, height/2, marioFrames);
   gameKey = new Key(this, 600, 200, keyImg);
   task = new Task(this, 200, 100, "Find the Key");
   enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyImg);
