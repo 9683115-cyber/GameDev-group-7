@@ -1,46 +1,44 @@
-
 class Enemy {
   PApplet parent;
-  PImage img;   // <-- add this
+  PImage img;   
   float x, y;
-  float width, height;
+  float w, h;
   float speed;
   float range;
-  boolean chasing = false;
   float dirX, dirY;
 
-  // Constructor now includes PImage
-  Enemy(PApplet p, float startX, float startY, float w, float h, float spd, float rng, PImage i) {
+  Enemy(PApplet p, float startX, float startY, float w_, float h_, float spd, float rng, PImage i) {
     parent = p;
-    img = i;              // store image
+    img = i;
     x = startX;
     y = startY;
-    width = w;
-    height = h;
+    w = w_;
+    h = h_;
     speed = spd;
     range = rng;
-    dirX = parent.random(-1,1);
-    dirY = parent.random(-1,1);
+    dirX = parent.random(-1, 1);
+    dirY = parent.random(-1, 1);
   }
 
   void display() {
-    parent.image(img, x, y, width, height);
+    parent.image(img, x, y, w, h);
   }
 
   void update(Playar p) {
-    float distance = parent.dist(x, y, p.x, p.y);
+    float distance = parent.dist(x + w/2, y + h/2, p.x, p.y);
     if (distance < range) {
-      // chase player
-      float angle = parent.atan2(p.y - y, p.x - x);
+      float angle = parent.atan2(p.y - (y + h/2), p.x - (x + w/2));
       x += parent.cos(angle) * speed;
       y += parent.sin(angle) * speed;
     } else {
-      // random movement
       x += dirX * speed * 0.5;
       y += dirY * speed * 0.5;
-      if (x < 0 || x + width > parent.width) dirX *= -1;
-      if (y < 0 || y + height > parent.height) dirY *= -1;
+      if (x < 0 || x + w > parent.width) dirX *= -1;
+      if (y < 0 || y + h > parent.height) dirY *= -1;
     }
   }
-}
 
+  boolean checkCollision(Playar p) {
+    return !(p.x + p.width < x || p.x > x + w || p.y + p.height < y || p.y > y + h);
+  }
+}
