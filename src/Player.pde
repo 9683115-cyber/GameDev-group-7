@@ -1,4 +1,3 @@
-//Kai Li Cantwell
 class Playar {
   PApplet parent;
   PImage[] frames;
@@ -51,6 +50,7 @@ class Playar {
     parent.image(frames[currentFrame], x, y, width, height);
   }
 }
+
 
 
 
