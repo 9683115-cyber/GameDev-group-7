@@ -26,10 +26,10 @@ class Playar {
   void update() {
     vx = 0;
     vy = 0;
-    if (movingRight) vx = 5;
-    if (movingLeft)  vx = -5;
-    if (movingUp)    vy = -5;
-    if (movingDown)  vy = 5;
+    if (movingRight) vx = 3;
+    if (movingLeft)  vx = -3;
+    if (movingUp)    vy = -3;
+    if (movingDown)  vy = 3;
 
     x += vx;
     y += vy;
@@ -50,6 +50,7 @@ class Playar {
     parent.image(frames[currentFrame], x, y, width, height);
   }
 }
+
 
 
 
