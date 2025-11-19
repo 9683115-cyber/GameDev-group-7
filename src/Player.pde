@@ -1,40 +1,52 @@
-class Player {
+class Playar {
   PApplet parent;
-  PImage[] frames;
+
+  PImage[] marioFrames;
+  PImage[] backMarioFrames;
+  PImage[] currentFrames;
+
   int frameCount;
   int currentFrame = 0;
   int frameDelay = 6;
   int frameTimer = 0;
- 
-  float x, y;
+
+  public float x, y; // public for Enemy access
   float vx = 0, vy = 0;
   float width = 64, height = 96;
 
-  boolean movingRight = false;
   boolean movingLeft = false;
+  boolean movingRight = false;
   boolean movingUp = false;
   boolean movingDown = false;
-  
-  Player(PApplet p, float startX, float startY, PImage[] f) {
+
+  Playar(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
     parent = p;
     x = startX;
     y = startY;
-    frames = f;
-    frameCount = frames.length;
+    marioFrames = front;
+    backMarioFrames = back;
+    currentFrames = marioFrames;
+    frameCount = marioFrames.length;
   }
 
   void update() {
-    vx = 0;
-    vy = 0;
+    vx = 0; vy = 0;
+
+    if (movingLeft) vx = -3;
     if (movingRight) vx = 3;
-    if (movingLeft)  vx = -3;
-    if (movingUp)    vy = -3;
-    if (movingDown)  vy = 3;
+    if (movingUp) vy = -3;
+    if (movingDown) vy = 3;
 
     x += vx;
     y += vy;
 
-    // Animation
+    // Animation rules
+    if (movingRight) {
+      currentFrames = backMarioFrames;
+    } else {
+      currentFrames = marioFrames;
+    }
+
     if (vx != 0 || vy != 0) {
       frameTimer++;
       if (frameTimer >= frameDelay) {
@@ -47,7 +59,6 @@ class Player {
   }
 
   void display() {
-    parent.image(frames[currentFrame], x, y, width, height);
+    parent.image(currentFrames[currentFrame], x, y, width, height);
   }
 }
-
