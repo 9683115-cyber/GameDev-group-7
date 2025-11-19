@@ -19,11 +19,10 @@ class Key {
     }
   }
 
-  void checkCollision(Player p) {
+  void checkCollision(Playar p) {
     if (!isCollected) {
       boolean colliding = !(p.x + p.width < x - size/2 || p.x > x + size/2 || p.y + p.height < y - size/2 || p.y > y + size/2);
       if (colliding) isCollected = true;
     }
   }
 }
-
