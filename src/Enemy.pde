@@ -24,7 +24,7 @@ class Enemy {
     parent.image(img, x, y, w, h);
   }
 
-  void update(Playar p) {
+  void update(Player p) {
     float distance = parent.dist(x + w/2, y + h/2, p.x, p.y);
     if (distance < range) {
       float angle = parent.atan2(p.y - (y + h/2), p.x - (x + w/2));
@@ -38,7 +38,7 @@ class Enemy {
     }
   }
 
-  boolean checkCollision(Playar p) {
+  boolean checkCollision(Player p) {
     return !(p.x + p.width < x || p.x > x + w || p.y + p.height < y || p.y > y + h);
   }
 }
