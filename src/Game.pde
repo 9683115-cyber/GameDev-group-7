@@ -11,6 +11,9 @@ PImage loseImg;
 PImage pauseImg;
 PImage startImg;
 
+RoomManager roomManager;
+
+
 boolean gamePaused = false;
 boolean gameWon = false;
 boolean gameLost = false;
@@ -36,16 +39,41 @@ void setup() {
   gameKey = new Key(this, 600, 200, keyImg);
   task = new Task(this, 200, 100, "Find the Key");
   enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyImg);
+
+  Room room1 = new Room(this,
+    new Key(this, 600, 200, keyImg),
+    new Enemy(this, 100, 100, 64, 96, 2, 200, enemyImg),
+    new Task(this, 200, 100, "Find the Key"),
+    width - 100, height/2  // door location
+    );
+
+  Room room2 = new Room(this,
+    new Key(this, 300, 400, keyImg),
+    new Enemy(this, 500, 200, 64, 96, 2, 200, enemyImg),
+    new Task(this, 200, 100, "Find Second Key"),
+    width - 100, height/2
+    );
+
+  Room room3 = new Room(this,
+    new Key(this, 200, 200, keyImg),
+    new Enemy(this, 600, 300, 64, 96, 3, 200, enemyImg),
+    new Task(this, 200, 100, "Final Key"),
+    width - 100, height/2
+    );
+
+  Room[] rooms = { room1, room2, room3 };
+
+  roomManager = new RoomManager(this, rooms);
 }
 
 void draw() {
   background(80, 180, 250);
 
   if (!gamestart) {
-  imageMode(CORNER);   
-  image(startImg, 0, 0, width, height); 
-  return;
-}
+    imageMode(CORNER);
+    image(startImg, 0, 0, width, height);
+    return;
+  }
 
   if (gamePaused) {
     imageMode(CENTER);
@@ -53,7 +81,7 @@ void draw() {
     return;
   }
 
-  
+
   if (gameWon) {
     imageMode(CENTER);
     image(winImg, width/2, height/2);
@@ -65,20 +93,24 @@ void draw() {
     return;
   }
 
-  
+
+  Room current = roomManager.getCurrentRoom();
+
+  // Update and draw room contents
+  current.display();
+  roomManager.update(player);
+
+  // Draw player on top
   player.update();
   player.display();
 
-  gameKey.display();
-  gameKey.checkCollision(player); 
+  // Enemy collision loss
+  if (current.roomEnemy.checkCollision(player)) {
+    gameLost = true;
+  }
 
-  task.display();
-  task.checkInteraction(player);
-
-  enemy.update(player);
-  enemy.display();
   if (enemy.checkCollision(player)) {
-    gameLost = true; 
+    gameLost = true;
   }
 }
 
