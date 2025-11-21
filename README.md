@@ -10,6 +10,9 @@ This diagram shows how Maltigi’s Haunted Mansion is organized: the Game manage
 
 ![Code Class Diagram](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Code%20diagram/MaltigiCodeDiagram.drawio.png)
 
+## To Do List:
+Add a anger bar (similar to health bar) to the enemy to increase difficulty
+
 ## Timeline & Plan
 ![timeline](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/timeline.jpg)
 ![Plan](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/plan-page-001.jpg)
