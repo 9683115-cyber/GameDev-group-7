@@ -1,3 +1,4 @@
+// Kai Li Cantwell, Dave Martinez Valencia
 class Playar {
   PApplet parent;
 
@@ -72,3 +73,4 @@ class Playar {
     parent.image(currentFrames[currentFrame], x, y, width, height);
   }
 }
+
