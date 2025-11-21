@@ -1,3 +1,4 @@
+// Rusty Spendlove, Kai Li Cantwell, Dave Martinez Valencia
 class Task {
   PApplet parent;
   float x, y;
