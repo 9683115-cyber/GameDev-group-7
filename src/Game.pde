@@ -35,7 +35,7 @@ void setup() {
     marioFramesBack[i] = loadImage("backmario" + (i+1) + ".png");
   }
 
-  // Load images
+  // Rusty Spendlove, Malcolm Kyle [Responsible for Images]
   keyImg = loadImage("key.png");
   enemyImg = loadImage("maltigi better.png");
   winImg = loadImage("win.png");
