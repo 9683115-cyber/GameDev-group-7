@@ -13,11 +13,16 @@ PImage loseImg;
 PImage pauseImg;
 PImage startImg;
 PImage backgroundImg;
+PImage doorImg;
 
 boolean gamePaused = false;
 boolean gameWon = false;
 boolean gameLost = false;
 boolean gamestart = false;
+
+
+int spawnProtection = 60;  
+
 
 void setup() {
   fullScreen();
@@ -29,29 +34,35 @@ void setup() {
     marioFramesBack[i] = loadImage("backmario" + (i+1) + ".png");
   }
 
-  // Load other images
+  // Load images
   keyImg = loadImage("key.png");
   enemyImg = loadImage("maltigi better.png");
   winImg = loadImage("win.png");
   loseImg = loadImage("WEGALOSE-1-1.png");
   pauseImg = loadImage("PauseScreen-1-1.png");
   startImg = loadImage("start .png");
-  backgroundImg = loadImage("background.png"); // your full-screen background
+  backgroundImg = loadImage("background.png");
+  doorImg = loadImage("door.png");
 
+  // Player in middle
   player = new Playar(this, width/2, height/2, marioFrames, marioFramesBack);
 
   gameKey = new Key(this, 600, 200, keyImg);
-  task = new Task(this, 200, 100, "Find the Key");
-  enemy = new Enemy(this, 100, 100, 64, 96, 2, 200, enemyImg);
+  
+  task = new Task(this, 520 , 580, "Find the Key");
+
+  enemy = new Enemy(this, 1500, 250, 64, 96, 2, 200, enemyImg);
 }
 
+
+
 void draw() {
-  // Draw background
+  // Background
   imageMode(CORNER);
   image(backgroundImg, 0, 0, width, height);
-
+  image(doorImg, 530 - 100, 555 - 64, 190, 270);
   if (!gamestart) {
-    image(startImg, 0, 0, width, height); 
+    image(startImg, 0, 0, width, height);
     return;
   }
 
@@ -73,7 +84,8 @@ void draw() {
     return;
   }
 
-  // Update and display game objects
+
+
   player.update();
   player.display();
 
@@ -86,16 +98,21 @@ void draw() {
   enemy.update(player);
   enemy.display();
 
-  if (enemy.checkCollision(player)) {
-    gameLost = true;
+
+  if (spawnProtection > 0) {
+    spawnProtection--;   
+  } else {
+    if (enemy.checkCollision(player)) {
+      gameLost = true;
+    }
   }
 
-  // Move to next room if task complete
   if (task.complete && gameKey.isCollected) {
-    // Reset or load next room logic here
     println("Next room!");
   }
 }
+
+
 
 void keyPressed() {
   if (key == 'p' || key == 'P') gamePaused = !gamePaused;
@@ -118,5 +135,8 @@ void keyReleased() {
 }
 
 void mousePressed() {
-  if (!gamestart) gamestart = true;
+  if (!gamestart) {
+    gamestart = true;
+    spawnProtection = 60; // RESET protection when start is pressed
+  }
 }
