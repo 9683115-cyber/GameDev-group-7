@@ -1,3 +1,4 @@
+// Malcom Kyle (graphics), Kai Li Cantwell, Dave Martinez Valencia
 class Enemy {
   PApplet parent;
   PImage img;
