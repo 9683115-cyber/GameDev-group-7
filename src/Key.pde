@@ -1,4 +1,4 @@
-// Kai Li Cantwell, Dave Martinez Valencia
+// Kai Li Cantwell
 class Key {
   PApplet parent;
   float x, y;
@@ -32,5 +32,6 @@ class Key {
     }
   }
 }
+
 
 
