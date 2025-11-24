@@ -11,12 +11,12 @@ This diagram shows how Maltigi’s Haunted Mansion is organized: the Game manage
 ![Code Class Diagram](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Code%20diagram/MaltigiCodeDiagram.drawio.png)
 
 ## To Do List:
-### Add Room Class
-### Add NPC Class (Foyer, gives first key to first room)
-### Make different color keys to differentate which room it unlocks
-### Add sparkle affect and chime audio for when player picks up keys
-### Add a anger bar (similar to health bar) to the enemy to increase difficulty
-### Possibly add cut scene animation
+#### - Add Room Class
+#### - Add NPC Class (Foyer, gives first key to first room)
+#### - Make different color keys to differentate which room it unlocks
+#### - Add sparkle affect and chime audio for when player picks up keys
+#### - Add a anger bar (similar to health bar) to the enemy to increase difficulty
+#### - Possibly add cut scene animation
 
 ## Timeline & Plan
 ![timeline](https://github.com/9683115-cyber/GameDev-group-7/blob/main/Images/timeline.jpg)
