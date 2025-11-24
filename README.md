@@ -12,6 +12,7 @@ This diagram shows how Maltigi’s Haunted Mansion is organized: the Game manage
 
 ## To Do List:
 #### - Add Room Class
+#### - Add Enemy Jumpscare
 #### - Add NPC Class (Foyer, gives first key to first room)
 #### - Make different color keys to differentate which room it unlocks
 #### - Add sparkle affect and chime audio for when player picks up keys
