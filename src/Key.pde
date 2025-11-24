@@ -20,7 +20,7 @@ class Key {
     }
   }
 
-  void checkCollision(Playar p) {
+  void checkCollision(Player p) {
     if (!isCollected) {
       boolean colliding = !(
         p.x + p.width < x - size/2 ||
@@ -32,4 +32,5 @@ class Key {
     }
   }
 }
+
 
