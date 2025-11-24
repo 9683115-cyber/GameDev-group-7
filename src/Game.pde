@@ -2,7 +2,7 @@
 PImage[] marioFrames = new PImage[5];
 PImage[] marioFramesBack = new PImage[5];
 
-Playar player;
+Player player;
 Key gameKey;
 Task task;
 Enemy enemy;
@@ -46,7 +46,7 @@ void setup() {
   doorImg = loadImage("door.png");
 
   // Player in middle
-  player = new Playar(this, width/2, height/2, marioFrames, marioFramesBack);
+  player = new Player(this, width/2, height/2, marioFrames, marioFramesBack);
 
   gameKey = new Key(this, 600, 200, keyImg);
   
