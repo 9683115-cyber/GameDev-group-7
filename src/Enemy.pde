@@ -25,7 +25,7 @@ class Enemy {
     dirY = parent.random(-1, 1);
   }
 
-  void update(Playar p) {
+  void update(Player p) {
     float distance = parent.dist(x + w/2, y + h/2, p.x + p.width/2, p.y + p.height/2);
 
     if (distance < range) {
@@ -54,7 +54,7 @@ class Enemy {
     parent.image(img, x, y, w, h);
   }
 
-  boolean checkCollision(Playar p) {
+  boolean checkCollision(Player p) {
     return !(p.x + p.width < x ||
              p.x > x + w ||
              p.y + p.height < y ||
