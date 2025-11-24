@@ -21,7 +21,7 @@ class Task {
     parent.text(description, x, y - size);
   }
 
-  void checkInteraction(Playar p) {
+  void checkInteraction(Player p) {
     float distance = parent.dist(x, y, p.x + p.width/2, p.y + p.height/2);
     if (distance < size/2 + max(p.width, p.height)/2) complete = true;
   }
