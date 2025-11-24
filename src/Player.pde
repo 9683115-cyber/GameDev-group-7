@@ -1,4 +1,4 @@
-// Kai Li Cantwell, Dave Martinez Valencia
+// Dave Martinez Valencia, Kai Li Cantwell
 class Player {
   PApplet parent;
 
@@ -73,5 +73,6 @@ class Player {
     parent.image(currentFrames[currentFrame], x, y, width, height);
   }
 }
+
 
 
