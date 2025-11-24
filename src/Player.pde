@@ -1,5 +1,5 @@
 // Kai Li Cantwell, Dave Martinez Valencia
-class Playar {
+class Player {
   PApplet parent;
 
   PImage[] marioFrames;
@@ -29,7 +29,7 @@ class Playar {
   float topLimit    = 140;
   float bottomLimit = 870;
 
-  Playar(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
+  Player(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
     parent = p;
     x = startX;
     y = startY;
@@ -73,4 +73,5 @@ class Playar {
     parent.image(currentFrames[currentFrame], x, y, width, height);
   }
 }
+
 
