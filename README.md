@@ -9,7 +9,7 @@ Rusty Spendlove, Malcolm Kyle. Kai Li Cantwell, Dave Martinez Valencia
 #### - Add Enemy Jumpscare
 #### - Add NPC Class (Foyer, gives first key to first room)
 #### - Make different color keys to differentate which room it unlocks
-#### - Add sparkle affect and chime audio for when player picks up keys
+#### - Add sparkle effect and chime audio for when player picks up keys
 #### - Add a anger bar (similar to health bar) to the enemy to increase difficulty
 #### - Possibly add cut scene animation
 
