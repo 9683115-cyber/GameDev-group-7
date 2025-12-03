@@ -1,4 +1,3 @@
-// Rusty Spendlove, Kai Li Cantwell, Dave Martinez Valencia
 class Task {
   PApplet parent;
   float x, y;
@@ -21,7 +20,7 @@ class Task {
     parent.text(description, x, y - size);
   }
 
-  void checkInteraction(Player p) {
+  void checkInteraction(Playar p) {
     float distance = parent.dist(x, y, p.x + p.width/2, p.y + p.height/2);
     if (distance < size/2 + max(p.width, p.height)/2) complete = true;
   }
