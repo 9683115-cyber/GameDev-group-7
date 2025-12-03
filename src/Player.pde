@@ -1,5 +1,4 @@
-// Dave Martinez Valencia, Kai Li Cantwell
-class Player {
+class Playar {
   PApplet parent;
 
   PImage[] marioFrames;
@@ -7,15 +6,12 @@ class Player {
   PImage[] currentFrames;
 
   int frameCount;
-  int currentFrame = 0;
-
-  int frameDelay = 2;
-  int frameTimer = 0;
+  float currentFrame = 0;
+  float animationSpeed = 1.2f;
 
   float x, y;
   float vx = 0, vy = 0;
-  float speed = 10;
-
+  float speed = 10; 
   float width = 64, height = 96;
 
   boolean movingLeft = false;
@@ -23,13 +19,19 @@ class Player {
   boolean movingUp = false;
   boolean movingDown = false;
 
-  // MAP LIMITS (from your screenshot)
-  float leftLimit   = 550;
-  float rightLimit  = 1370;
-  float topLimit    = 140;
-  float bottomLimit = 870;
+  // MAP LIMITS
+  float leftLimit = 550;
+  float rightLimit = 1370;
+  float topLimit = 140;
+  float bottomLimit = 1100;
 
-  Player(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
+  // Hitbox
+  float hitboxXOffset = 10;
+  float hitboxYOffset = -5;
+  float hitboxWidth = 40;
+  float hitboxHeight = 70;
+
+  Playar(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
     parent = p;
     x = startX;
     y = startY;
@@ -39,7 +41,8 @@ class Player {
     frameCount = marioFrames.length;
   }
 
-  void update() {
+  void update(ArrayList<Obstacle> obstacles) {
+    float oldX = x, oldY = y;
     vx = vy = 0;
 
     if (movingLeft)  vx = -speed;
@@ -50,29 +53,40 @@ class Player {
     x += vx;
     y += vy;
 
-    // Enforce invisible wall boundaries
+    // Collision with obstacles
+    for (Obstacle o : obstacles) {
+      if (collidesWith(o.x, o.y, o.w, o.h)) {
+        x = oldX;
+        y = oldY;
+      }
+    }
+
+    // Map boundaries
     x = parent.constrain(x, leftLimit, rightLimit - width);
     y = parent.constrain(y, topLimit, bottomLimit - height);
 
-    // Animation switching
-    currentFrames = movingRight ? backMarioFrames : marioFrames;
+    // Animation frames
+    if (movingRight) currentFrames = backMarioFrames;
+    else if (movingLeft) currentFrames = marioFrames;
 
-    // Animation logic
     if (vx != 0 || vy != 0) {
-      frameTimer++;
-      if (frameTimer >= frameDelay) {
-        currentFrame = (currentFrame + 1) % frameCount;
-        frameTimer = 0;
-      }
-    } else {
-      currentFrame = 0;
-    }
+      currentFrame += animationSpeed * (Math.abs(vx) + Math.abs(vy)) / 10.0f;
+      if (currentFrame >= frameCount) currentFrame = 0;
+    } else currentFrame = 0;
   }
 
   void display() {
-    parent.image(currentFrames[currentFrame], x, y, width, height);
+    parent.image(currentFrames[(int)currentFrame], x, y, width, height);
+
+    // Optional hitbox display
+    parent.noFill();
+    parent.stroke(255, 0, 0);
+    parent.rect(x + hitboxXOffset, y + hitboxYOffset, hitboxWidth, hitboxHeight);
+  }
+
+  boolean collidesWith(float ox, float oy, float ow, float oh) {
+    float hx = x + hitboxXOffset;
+    float hy = y + hitboxYOffset;
+    return !(hx + hitboxWidth <= ox || hx >= ox + ow || hy + hitboxHeight <= oy || hy >= oy + oh);
   }
 }
-
-
-
