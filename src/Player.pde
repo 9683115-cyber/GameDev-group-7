@@ -1,6 +1,6 @@
 // Dave Martinez Valencia
 //(Some game mechanics and code logic were implemented with the help of ChatGPT)
-class Player {
+class Playar {
   PApplet parent;
 
   PImage[] marioFrames;
@@ -8,15 +8,12 @@ class Player {
   PImage[] currentFrames;
 
   int frameCount;
-  int currentFrame = 0;
-
-  int frameDelay = 2;
-  int frameTimer = 0;
+  float currentFrame = 0;
+  float animationSpeed = 1.2f;
 
   float x, y;
   float vx = 0, vy = 0;
-  float speed = 10;
-
+  float speed = 10; 
   float width = 64, height = 96;
 
   boolean movingLeft = false;
@@ -24,13 +21,19 @@ class Player {
   boolean movingUp = false;
   boolean movingDown = false;
 
-  // Hitbox (offsets from player's x,y)
+
+  float leftLimit;
+  float rightLimit;
+  float topLimit;
+  float bottomLimit;
+
+ 
   float hitboxXOffset = 10;
   float hitboxYOffset = -5;
   float hitboxWidth = 40;
   float hitboxHeight = 70;
 
-  Player(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
+  Playar(PApplet p, float startX, float startY, PImage[] front, PImage[] back) {
     parent = p;
     x = startX;
     y = startY;
@@ -40,10 +43,15 @@ class Player {
     frameCount = marioFrames.length;
   }
 
-  // Pass in obstacles and room limits
-  void update(ArrayList<Obstacle> obstacles, float minX, float maxX, float minY, float maxY) {
-    float oldX = x;
-    float oldY = y;
+  void setLimits(float left, float right, float top, float bottom) {
+    leftLimit = left;
+    rightLimit = right;
+    topLimit = top;
+    bottomLimit = bottom;
+  }
+
+  void update(ArrayList<Obstacle> obstacles) {
+    float oldX = x, oldY = y;
     vx = vy = 0;
 
     if (movingLeft)  vx = -speed;
@@ -52,45 +60,31 @@ class Player {
     if (movingDown)  vy = speed;
 
     x += vx;
-    // Check horizontal collisions with obstacles
+    y += vy;
+
     for (Obstacle o : obstacles) {
       if (collidesWith(o.x, o.y, o.w, o.h)) {
         x = oldX;
-        break;
-      }
-    }
-
-    y += vy;
-    // Check vertical collisions with obstacles
-    for (Obstacle o : obstacles) {
-      if (collidesWith(o.x, o.y, o.w, o.h)) {
         y = oldY;
-        break;
       }
     }
 
-    // Enforce room boundaries (invisible walls)
-    x = parent.constrain(x, minX, maxX - width);
-    y = parent.constrain(y, minY, maxY - height);
+   
+    x = parent.constrain(x, leftLimit, rightLimit - width);
+    y = parent.constrain(y, topLimit, bottomLimit - height);
 
-    // Animation switching
-    currentFrames = movingRight ? backMarioFrames : marioFrames;
+    if (movingRight) currentFrames = backMarioFrames;
+    else if (movingLeft) currentFrames = marioFrames;
 
-    // Animation logic
     if (vx != 0 || vy != 0) {
-      frameTimer++;
-      if (frameTimer >= frameDelay) {
-        currentFrame = (currentFrame + 1) % frameCount;
-        frameTimer = 0;
-      }
-    } else {
-      currentFrame = 0;
-    }
+      currentFrame += animationSpeed * (Math.abs(vx) + Math.abs(vy)) / 10.0f;
+      if (currentFrame >= frameCount) currentFrame = 0;
+    } else currentFrame = 0;
   }
 
   void display() {
-    parent.image(currentFrames[currentFrame], x, y, width, height);
-    // debug hitbox
+    parent.image(currentFrames[(int)currentFrame], x, y, width, height);
+
     parent.noFill();
     parent.stroke(255, 0, 0);
     parent.rect(x + hitboxXOffset, y + hitboxYOffset, hitboxWidth, hitboxHeight);
