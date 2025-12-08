@@ -7,231 +7,115 @@
  Notes:
  - All graphics are inspired by Ao Oni.
  - Some game mechanics and code logic were implemented with the help of ChatGPT. */
+Playar playar;
+Room currentRoom;
+Room1 room1;
+Room2 room2;
+
 PImage[] marioFrames = new PImage[5];
 PImage[] marioFramesBack = new PImage[5];
-
-Room foyer;
-Room kitchen;
-Room libraryRoom;
-//Room rightRoom;
-
-Room currentRoom;
-
-int roomIndex = 0;
-Room[] rooms;
-
-
-Player player;
-Key gameKey;
-Task task;
-Enemy enemy;
-
-PImage keyImg;
-PImage enemyImg;
-PImage winImg;
-PImage loseImg;
-PImage pauseImg;
-PImage startImg;
-PImage backgroundImg;
-PImage doorImg;
-
-PImage kitchenImg;
-PImage libraryImg;
-PImage foyerImg;
-
+PImage keyImg, enemyImg1, enemyImg2, winImg, loseImg, pauseImg, startImg, backgroundImg, doorImg;
 
 boolean gamePaused = false;
 boolean gameWon = false;
 boolean gameLost = false;
 boolean gamestart = false;
 
-
-int spawnProtection = 60;
-
-
 void setup() {
   fullScreen();
-  //size(800,600);
-  background(0);
-  
 
-  // Load Mario frames
   for (int i = 0; i < 5; i++) {
     marioFrames[i] = loadImage("mario" + (i+1) + ".png");
     marioFramesBack[i] = loadImage("backmario" + (i+1) + ".png");
   }
 
-  // Images
   keyImg = loadImage("key.png");
-  enemyImg = loadImage("maltigi better.png");
+  enemyImg1 = loadImage("maltigi better.png");  // Room1 enemy image
+  enemyImg2 = loadImage("Urio.png");
   winImg = loadImage("AlexWinga.png");
-  loseImg = loadImage("WEGALOSE-1-1.png.png");
-  pauseImg = loadImage("PauseScreen.png");
-  startImg = loadImage("start .png");
+  loseImg = loadImage("WEGALOSE-1-1.png");
+  pauseImg = loadImage("PauseScreen-1-1.png");
+  startImg = loadImage("start.png");
   backgroundImg = loadImage("background.png");
   doorImg = loadImage("door.png");
 
-  kitchenImg = loadImage("k2.png");
-  libraryImg = loadImage("Library-1.png.png");
-  foyerImg = loadImage("Foyer.png");
+  playar = new Playar(this, 800, 700, marioFrames, marioFramesBack);
 
-  player = new Player(this, width/2, height/2, marioFrames, marioFramesBack);
+  room1 = new Room1(this, backgroundImg, doorImg, enemyImg1, keyImg);
+  room2 = new Room2(this, loadImage("Library-1.png.png"), doorImg, enemyImg2, keyImg);
 
-
-  foyer = new Room(
-    this,
-    foyerImg, doorImg,
-    430, 420, 190, 270, // door x,y,w,h
-    new Key(this, 600, 200, keyImg),
-    new Task(this, 50, 50, "Take the first key from NPC"),
-    2, 200, // enemy speed & range
-    550, 1370, 140, 870, // room boundaries (minX, maxX, minY, maxY)
-    enemyImg, 1500, 250, 64, 96   // enemy image and starting x,y,width,height
-    );
-
-  kitchen = new Room(
-    this, // PApplet
-    kitchenImg, doorImg, // background & door images
-    480, 440, 190, 260, // door x, y, w, h
-    new Key(this, 700, 300, keyImg),
-    new Task(this, 50, 50, "Find kitchen key"),
-    2.5, 260, // enemy speed & range
-    100, width-100, 120, height-120, // room boundaries
-    enemyImg, 1500, 250, 64, 96        // enemy image and starting x,y,width,height
-    );
-
-  libraryRoom = new Room(
-    this, // PApplet
-    libraryImg, doorImg, // background & door images
-    500, 450, 190, 260, // door x, y, w, h
-    new Key(this, 620, 260, keyImg),
-    new Task(this, 50, 50, "Solve puzzle"),
-    3, 320, // enemy speed & range
-    100, width-100, 120, height-120, // room boundaries
-    enemyImg, 1500, 250, 64, 96        // enemy image and starting x, y, width, height
-    );
-
-
-  rooms = new Room[] { foyer, kitchen, libraryRoom };
-  currentRoom = rooms[0];
-
-  // Reset player to center of current room
-  player.x = (currentRoom.minX + currentRoom.maxX) / 2;
-  player.y = (currentRoom.minY + currentRoom.maxY) / 2;
-
-  // Reset enemy position inside the current room's wander area
-  currentRoom.resetEnemyToWanderZoneCenter();
+  currentRoom = room1;
 }
 
 void draw() {
-  // Background & room drawing uses currentRoom
-  imageMode(CORNER);
-
-  currentRoom.drawRoom();
-//Dave Dave Martinez Valencia, Rusty Spendlove (graphics)
-  if (!gamestart) {
-    imageMode(CENTER);
-    image(startImg, width/2, height/2, width, height);
-    imageMode(CORNER); // reset so nothing else breaks
-    return;
+  if (!gamestart) { 
+    image(startImg, 0, 0, width, height);
+    return; 
+  }
+  if (gamePaused) { 
+    image(pauseImg, 0, 0, width, height);
+    return; 
+  }
+  if (gameWon) { 
+    image(winImg, 0, 0, width, height); 
+    return; 
+  }
+  if (gameLost) { 
+    image(loseImg, 0, 0, width, height); 
+    return; 
   }
 
-//Malcom Kyle
-  if (gamePaused) {
-    imageMode(CENTER);
-    image(pauseImg, width/2, height/1.5);
-    return;
-  }
-//Rusty Spendlove, Malcolm Kyle (graphics)
-  if (gameWon) {
-    imageMode(CENTER);
-   image(winImg, width/2, height/2);
-    return;
-  }
-//Kai Li Cantwell, Malcolm Kyle (graphics)
-  if (gameLost) {
-    imageMode(CENTER);
-    image(loseImg, width/2, height/2);
-    return;
-  }
-
- player.update(currentRoom.obstacles, currentRoom.minX, currentRoom.maxX, currentRoom.minY, currentRoom.maxY);
-  player.display();
+  currentRoom.run(playar);
 
 
-  currentRoom.roomKey.display();
-  currentRoom.roomKey.checkCollision(player);
-
-  if (currentRoom.roomKey.isCollected) currentRoom.roomTask.complete = true;
-
-  currentRoom.roomTask.display();
-  currentRoom.roomTask.checkInteraction(player);
-
-//Makes sure enemys speed and range is set to current room
-  currentRoom.roomEnemy.speed = currentRoom.enemySpeed;
-  currentRoom.roomEnemy.range = currentRoom.enemyRange;
-
- 
-  currentRoom.roomEnemy.update(player, currentRoom.obstacles, currentRoom.getWanderZone());
-  currentRoom.roomEnemy.display();
-
-  // If task & key complete and player at door, move to next room
-  if (currentRoom.roomTask.complete && currentRoom.roomKey.isCollected) {
-    if (currentRoom.playerAtDoor()) {
-      roomIndex++;
-
-      if (roomIndex >= rooms.length) {
-        gameWon = true;
-        return;
-      }
-
-      currentRoom = rooms[roomIndex];
-
-      // Reset player to center of new room
-      player.x = (currentRoom.minX + currentRoom.maxX) / 2;
-      player.y = (currentRoom.minY + currentRoom.maxY) / 2;
-
-      // reset enemy position to the center of the new room's wander zone
-      currentRoom.resetEnemyToWanderZoneCenter();
-
-      // Reset spawn protection so player doesn't instantly die
-      spawnProtection = 60;
+  if (currentRoom instanceof Room1) {
+    Room1 r = (Room1) currentRoom;
+    if (r.enemy != null && r.enemy.checkCollision(playar)) {
+      println("PLAYER HIT BY ENEMY! GAME OVER!");
+      gameLost = true;
+    }
+  } else if (currentRoom instanceof Room2) {
+    Room2 r = (Room2) currentRoom;
+    if (r.enemy != null && r.enemy.checkCollision(playar)) {
+      println("PLAYER HIT BY ENEMY! GAME OVER!");
+      gameLost = true;
     }
   }
 
-  // Spawn protection prevents instant kill after starting in a new room
-  if (spawnProtection > 0) {
-    spawnProtection--;
-  } else {
-    if (currentRoom.roomEnemy.checkCollision(player)) {
-      gameLost = true;
+ 
+  if (currentRoom.isComplete() && !gameLost) {
+    if (currentRoom == room1) {
+      currentRoom = room2;
+
+     
+      playar.x = 300;
+      playar.y = 300;
+
+    } else {
+      gameWon = true;
     }
   }
 }
 
 void keyPressed() {
   if (key == 'p' || key == 'P') gamePaused = !gamePaused;
-
-  if (!gamePaused && !gameWon && !gameLost) {
-    if (key == 'a' || key == 'A') player.movingLeft = true;
-    if (key == 'd' || key == 'D') player.movingRight = true;
-    if (key == 'w' || key == 'W') player.movingUp = true;
-    if (key == 's' || key == 'S') player.movingDown = true;
+  if (!gamePaused) {
+    if (key == 'a' || key == 'A') playar.movingLeft = true;
+    if (key == 'd' || key == 'D') playar.movingRight = true;
+    if (key == 'w' || key == 'W') playar.movingUp = true;
+    if (key == 's' || key == 'S') playar.movingDown = true;
   }
 }
 
 void keyReleased() {
-  if (!gamePaused && !gameWon && !gameLost) {
-    if (key == 'a' || key == 'A') player.movingLeft = false;
-    if (key == 'd' || key == 'D') player.movingRight = false;
-    if (key == 'w' || key == 'W') player.movingUp = false;
-    if (key == 's' || key == 'S') player.movingDown = false;
+  if (!gamePaused) {
+    if (key == 'a' || key == 'A') playar.movingLeft = false;
+    if (key == 'd' || key == 'D') playar.movingRight = false;
+    if (key == 'w' || key == 'W') playar.movingUp = false;
+    if (key == 's' || key == 'S') playar.movingDown = false;
   }
 }
 
 void mousePressed() {
-  if (!gamestart) {
-    gamestart = true;
-    spawnProtection = 60; // RESET protection when start is pressed
-  }
+  if (!gamestart) gamestart = true;
 }
