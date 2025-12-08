@@ -2,32 +2,29 @@
 class Key {
   PApplet parent;
   float x, y;
-  float size = 40;
   boolean isCollected = false;
   PImage img;
+  float width = 32, height = 32;
 
-  Key(PApplet p, float startX, float startY, PImage keyImage) {
+  Key(PApplet p, float startX, float startY, PImage i) {
     parent = p;
     x = startX;
     y = startY;
-    img = keyImage;
+    img = i;
   }
 
   void display() {
-    if (!isCollected) {
-      parent.imageMode(CENTER);
-      parent.image(img, x, y, size, size);
-    }
+    if (!isCollected)
+      parent.image(img, x, y, width, height);
   }
 
-  void checkCollision(Player p) {
-    if (!isCollected) {
-      float px = p.x + p.hitboxXOffset;
-      float py = p.y + p.hitboxYOffset;
-      if (!(px + p.hitboxWidth <= x - size/2 || px >= x + size/2 || py + p.hitboxHeight <= y - size/2 || py >= y + size/2)) {
-        isCollected = true;
-      }
+  void checkCollision(Playar p) {
+    if (isCollected) return;
+    float px = p.x + p.hitboxXOffset;
+    float py = p.y + p.hitboxYOffset;
+    if (!(px + p.hitboxWidth <= x || px >= x + width || py + p.hitboxHeight <= y || py >= y + height)) {
+      isCollected = true;
+      println("Key Collected!");
     }
   }
 }
-
