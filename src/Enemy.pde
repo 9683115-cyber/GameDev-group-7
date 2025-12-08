@@ -1,5 +1,3 @@
-// Dave Martinez Valencia, Kai Li Cantwell
-//(Some game mechanics and code logic were implemented with the help of ChatGPT)
 class Enemy {
   PApplet parent;
   PImage img;
