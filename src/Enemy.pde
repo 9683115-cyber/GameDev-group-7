@@ -1,3 +1,4 @@
+// Dave Martinez Valencia, Kai Li Cantwell
 class Enemy {
   PApplet parent;
   PImage img;
