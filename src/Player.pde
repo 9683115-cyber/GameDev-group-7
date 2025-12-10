@@ -1,5 +1,4 @@
 // Dave Martinez Valencia
-//(Some game mechanics and code logic were implemented with the help of ChatGPT)
 class Playar {
   PApplet parent;
 
@@ -96,3 +95,4 @@ class Playar {
     return !(hx + hitboxWidth <= ox || hx >= ox + ow || hy + hitboxHeight <= oy || hy >= oy + oh);
   }
 }
+
