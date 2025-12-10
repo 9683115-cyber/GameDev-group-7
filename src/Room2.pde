@@ -1,4 +1,4 @@
-// Kai Li Cantwell
+// // Dave Martinez Valencia, Kai Li Cantwell
 class Room2 extends Room {
   Enemy2 enemy;
   Task task;
