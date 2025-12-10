@@ -1,6 +1,5 @@
 import processing.sound.*;  
 
-
 /*Game Development Class Project by:
  - Rusty Spendlove
  - Malcolm Kyle
@@ -10,7 +9,6 @@ import processing.sound.*;
  Notes:
  - All graphics are inspired by Ao Oni.
  - Some game mechanics and code logic were implemented with the help of ChatGPT. */
-
 Playar playar;
 Room currentRoom;
 Room1 room1;
@@ -25,7 +23,6 @@ boolean gameWon = false;
 boolean gameLost = false;
 boolean gamestart = false;
 
-// --- SOUND VARIABLES ---
 SoundFile startSound;
 SoundFile chaseSound;
 SoundFile screamSound;
@@ -51,7 +48,7 @@ void setup() {
   backgroundImg = loadImage("background.png");
   doorImg = loadImage("door.png");
 
-  // --- LOAD SOUNDS ---
+  
   startSound = new SoundFile(this,"Maltigi-Intro.wav");
   chaseSound = new SoundFile(this, "MaltigiChaseTheme.wav");
   screamSound = new SoundFile(this, "Voicy_Maltigi Scream.mp3");
@@ -90,7 +87,7 @@ void draw() {
 
   currentRoom.run(playar);
 
-  // --- CHECK FOR ENEMY COLLISION ---
+  // Enemy Collision check
   boolean playerCaught = false;
   if (currentRoom instanceof Room1) {
     Room1 r = (Room1) currentRoom;
@@ -126,7 +123,7 @@ void draw() {
     chaseSound.stop();
   }
 
-  // --- CHECK FOR ROOM COMPLETION ---
+  
   if (currentRoom.isComplete() && !gameLost) {
     if (currentRoom == room1) {
       currentRoom = room2;
@@ -165,7 +162,7 @@ void mousePressed() {
   }
 }
 
-// --- HELPER: PLAY KEY SOUND WHEN PLAYER PICKS UP KEY ---
+
 void playKeySound() {
   if (!keySound.isPlaying()) keySound.play();
 }
