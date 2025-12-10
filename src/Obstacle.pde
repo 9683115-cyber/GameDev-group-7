@@ -1,4 +1,3 @@
-// Dave Martinez Valencia
 class Obstacle {
   float x, y, w, h;
   Obstacle(float x, float y, float w, float h) {
