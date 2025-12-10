@@ -1,3 +1,14 @@
+/*Game Development Class Project by:
+ - Rusty Spendlove
+ - Malcolm Kyle
+ - Kai Li Cantwell
+ - Dave Martinez Valencia
+ 
+ Notes:
+ - All graphics are inspired by Ao Oni.
+ - Some game mechanics and code logic were implemented with the help of ChatGPT. */
+
+
 Playar playar;
 Room currentRoom;
 Room1 room1;
