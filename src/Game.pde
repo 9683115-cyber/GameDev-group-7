@@ -5,7 +5,7 @@
  - Dave Martinez Valencia
  
  Notes:
- - All graphics are inspired by Ao Oni.
+ - All graphics are inspired by Ao Oni and Luigi's Haunted Mansion.
  - Some game mechanics and code logic were implemented with the help of ChatGPT. */
 
 
