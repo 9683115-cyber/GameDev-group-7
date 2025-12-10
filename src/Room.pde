@@ -1,3 +1,4 @@
+// Dave Martinez Valencia, Kai Li Cantwell
 class Room {
   PApplet parent;
   PImage backgroundImg;
