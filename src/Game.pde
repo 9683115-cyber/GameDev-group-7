@@ -1,4 +1,14 @@
-import processing.sound.*;  // <-- Add this at the top
+/*Game Development Class Project by:
+ - Rusty Spendlove
+ - Malcolm Kyle
+ - Kai Li Cantwell
+ - Dave Martinez Valencia
+ 
+ Notes:
+ - All graphics are inspired by Ao Oni.
+ - Some game mechanics and code logic were implemented with the help of ChatGPT. */
+
+import processing.sound.*;  
 
 Playar playar;
 Room currentRoom;
