@@ -1,3 +1,4 @@
+// Dave Martinez Valencia
 class Enemy2 extends Enemy {
   Enemy2(PApplet p, float startX, float startY, float w_, float h_, float spd, float rng, PImage i) {
     super(p, startX, startY, w_, h_, spd, rng, i);
