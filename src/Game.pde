@@ -1,13 +1,4 @@
-/*Game Development Class Project by:
- - Rusty Spendlove
- - Malcolm Kyle
- - Kai Li Cantwell
- - Dave Martinez Valencia
- 
- Notes:
- - All graphics are inspired by Ao Oni and Luigi's Haunted Mansion.
- - Some game mechanics and code logic were implemented with the help of ChatGPT. */
-
+import processing.sound.*;  // <-- Add this at the top
 
 Playar playar;
 Room currentRoom;
@@ -22,6 +13,14 @@ boolean gamePaused = false;
 boolean gameWon = false;
 boolean gameLost = false;
 boolean gamestart = false;
+
+// --- SOUND VARIABLES ---
+SoundFile startSound;
+SoundFile chaseSound;
+SoundFile screamSound;
+SoundFile keySound;
+
+boolean chasePlaying = false;
 
 void setup() {
   fullScreen();
@@ -41,6 +40,12 @@ void setup() {
   backgroundImg = loadImage("background.png");
   doorImg = loadImage("door.png");
 
+  // --- LOAD SOUNDS ---
+  startSound = new SoundFile(this,"Maltigi-Intro.wav");
+  chaseSound = new SoundFile(this, "MaltigiChaseTheme.wav");
+  screamSound = new SoundFile(this, "Voicy_Maltigi Scream.mp3");
+  keySound = new SoundFile(this, "MaltigiGetKey.mp3");
+
   playar = new Playar(this, 800, 700, marioFrames, marioFramesBack);
 
   room1 = new Room1(this, backgroundImg, doorImg, enemyImg1, keyImg);
@@ -52,47 +57,71 @@ void setup() {
 void draw() {
   if (!gamestart) { 
     image(startImg, 0, 0, width, height);
+    if (!startSound.isPlaying()) startSound.play();
     return; 
   }
+
   if (gamePaused) { 
     image(pauseImg, 0, 0, width, height);
     return; 
   }
+
   if (gameWon) { 
     image(winImg, 0, 0, width, height); 
     return; 
   }
+
   if (gameLost) { 
     image(loseImg, 0, 0, width, height); 
+    if (!screamSound.isPlaying()) screamSound.play();  // Scream when caught
     return; 
   }
 
   currentRoom.run(playar);
 
-
+  // --- CHECK FOR ENEMY COLLISION ---
+  boolean playerCaught = false;
   if (currentRoom instanceof Room1) {
     Room1 r = (Room1) currentRoom;
     if (r.enemy != null && r.enemy.checkCollision(playar)) {
-      println("PLAYER HIT BY ENEMY! GAME OVER!");
-      gameLost = true;
+      playerCaught = true;
+    } else if (r.enemy != null && dist(playar.x, playar.y, r.enemy.x, r.enemy.y) < 300) {
+      if (!chaseSound.isPlaying()) chaseSound.loop();  // Start chase sound
+      chasePlaying = true;
+    } else {
+      if (chasePlaying) {
+        chaseSound.stop();
+        chasePlaying = false;
+      }
     }
   } else if (currentRoom instanceof Room2) {
     Room2 r = (Room2) currentRoom;
     if (r.enemy != null && r.enemy.checkCollision(playar)) {
-      println("PLAYER HIT BY ENEMY! GAME OVER!");
-      gameLost = true;
+      playerCaught = true;
+    } else if (r.enemy != null && dist(playar.x, playar.y, r.enemy.x, r.enemy.y) < 300) {
+      if (!chaseSound.isPlaying()) chaseSound.loop();
+      chasePlaying = true;
+    } else {
+      if (chasePlaying) {
+        chaseSound.stop();
+        chasePlaying = false;
+      }
     }
   }
 
- 
+  if (playerCaught) {
+    println("PLAYER HIT BY ENEMY! GAME OVER!");
+    gameLost = true;
+    chaseSound.stop();
+  }
+
+  // --- CHECK FOR ROOM COMPLETION ---
   if (currentRoom.isComplete() && !gameLost) {
     if (currentRoom == room1) {
       currentRoom = room2;
-
-     
       playar.x = 300;
       playar.y = 300;
-
+      if (keySound.isPlaying()) keySound.stop(); // Stop key sound if playing
     } else {
       gameWon = true;
     }
@@ -119,5 +148,13 @@ void keyReleased() {
 }
 
 void mousePressed() {
-  if (!gamestart) gamestart = true;
+  if (!gamestart) {
+    gamestart = true;
+    if (startSound.isPlaying()) startSound.stop();
+  }
+}
+
+// --- HELPER: PLAY KEY SOUND WHEN PLAYER PICKS UP KEY ---
+void playKeySound() {
+  if (!keySound.isPlaying()) keySound.play();
 }
